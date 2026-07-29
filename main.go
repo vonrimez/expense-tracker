@@ -47,7 +47,7 @@ func load(name string) (Expenses, error) {
 
 	if _, err = os.Stat(name); os.IsNotExist(err) {
 		return Expenses{
-			{"ID", "Data", "Description", "Amount"},
+			{"ID", "Date", "Description", "Amount"},
 			{"", "3", "5", "12"},
 		}, nil
 	}
@@ -230,7 +230,7 @@ func (exp *Expenses) update(args []string) error {
 	}
 
 	(*exp)[trueID] = Expense{
-		strconv.Itoa(trueID),
+		strconv.Itoa(*id),
 		time.Now().Format(time.DateOnly),
 		*description,
 		strconv.Itoa(*amount),
@@ -307,7 +307,7 @@ func (exp *Expenses) summary(args []string) error {
 	} else {
 		for i := 1; i < len(*exp)-1; i++ {
 			e := (*exp)[i]
-			if *month == atoi(e[1][6:7]) {
+			if *month == atoi(e[1][5:7]) {
 				sum += atoi(e[3])
 			}
 		}
